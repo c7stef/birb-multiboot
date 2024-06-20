@@ -27,7 +27,7 @@ typedef enum VgaColor {
 extern VgaColor vga_color_map[];
 
 #define VGA_WIDTH 80
-#define VGA_HEIGHT 25
+#define VGA_HEIGHT 50
 
 typedef struct TermHandle
 {
@@ -40,10 +40,13 @@ typedef struct TermHandle
 
 uint8_t vga_entry_color(enum VgaColor fg, enum VgaColor bg);
 uint16_t vga_entry(unsigned char uc, uint8_t color);
+
+void terminal_change_mode(void);
+void terminal_initialize(TermHandle* term);
+
 void terminal_setcolor(TermHandle* term, uint8_t color);
 void terminal_putentryat(TermHandle* term, uint16_t entry, size_t x, size_t y);
 void terminal_putchar(TermHandle* term, char c);
-void terminal_initialize(TermHandle* term);
 void terminal_clear(TermHandle* term);
 void terminal_write(TermHandle* term, const char* data, size_t size);
 void terminal_writestring(TermHandle* term, const char* data);

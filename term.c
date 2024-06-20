@@ -2,6 +2,7 @@
 
 #include "term.h"
 #include "utils.h"
+#include "int32.h"
 
 VgaColor vga_color_map[] = {
 	[' '] = VgaColor_Black,
@@ -10,6 +11,13 @@ VgaColor vga_color_map[] = {
 	['D'] = VgaColor_DarkGrey,
 	['G'] = VgaColor_LightGrey,
 };
+
+void terminal_change_mode(void)
+{
+	regs16_t regs;
+	regs.ax = 0x1112;
+	int32(0x10, &regs);
+}
 
 uint8_t vga_entry_color(enum VgaColor fg, enum VgaColor bg) 
 {
@@ -77,8 +85,7 @@ void terminal_draw_pixel(TermHandle* term, VgaColor color, size_t x, size_t y)
 {
 	uint16_t entry = vga_entry(' ', vga_entry_color(VgaColor_Black, color));
 	
-	terminal_putentryat(term, entry, 2*x	, y);
-	terminal_putentryat(term, entry, 2*x + 1, y);
+	terminal_putentryat(term, entry, x	, y);
 }
 
 void terminal_move_to(TermHandle* term, size_t x, size_t y)
