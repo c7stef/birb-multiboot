@@ -11,6 +11,7 @@ typedef struct Birb
 } Birb;
 
 void birb_initialize(Birb* birb);
+void birb_jump(Birb* birb);
 void birb_update(Birb* birb);
 void birb_render(Birb* birb, TermHandle* term);
 
