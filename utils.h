@@ -7,8 +7,8 @@
 #include "term.h"
 
 typedef struct Vec2 {
-    size_t x;
-    size_t y;
+    int x;
+    int y;
 } Vec2;
 
 size_t strlen(const char* str);
