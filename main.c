@@ -12,6 +12,7 @@ void kmain(void)
 {
 	TermHandle term = { 0 };
 
+	terminal_change_mode();
 	terminal_initialize(&term);
 	terminal_set_bg_color(&term, VgaColor_Black);
 	terminal_clear(&term);
@@ -25,15 +26,20 @@ void kmain(void)
 	Birb birb = { 0 };
 	birb_initialize(&birb);
 
-	birb.position = (Vec2) {5, 5};
+	birb.position = (Vec2) {40, 40};
 
 	while (1) {
-		birb.position.y++;
+		Key key_pressed = keyboard_pop_key_pressed();
+
+		if (key_pressed == Key_W)
+			birb_jump(&birb);
+
+		birb_update(&birb);
 
 		terminal_clear(&term);
 		birb_render(&birb, &term);
 
-		sleep(50000);
+		sleep(5000);
 	}
 }
 
