@@ -7,7 +7,8 @@
 #include "utils.h"
 #include "pic.h"
 
-#define IDT_DESCRIPTORS_COUNT 256
+#define IDT_DESCRIPTORS_COUNT 	256
+#define IRQ_COUNT				16
 #define IDT_DESCRIPTOR_FLAG 0x8E
 #define ADDR_LOW(A) 	((uint32_t)(A) & 0xFFFF)
 #define ADDR_HIGH(A) 	((uint32_t)(A) >> 16)
@@ -23,7 +24,7 @@ typedef struct IdtEntry {
 } __attribute__((packed)) IdtEntry;
 
 static alignas(0x10) IdtEntry idt[IDT_DESCRIPTORS_COUNT];
-static void (*handlers[IDT_DESCRIPTORS_COUNT])(void) = { 0 };
+static void (*handlers[IRQ_COUNT])(void) = { 0 };
 
 static char const* const exception_names[] = {
 	[0] = "Division Error",
@@ -70,7 +71,7 @@ void irq_handler(size_t irq)
 
 void register_irq_handler(size_t irq, void callback(void))
 {
-	handlers[PIC_VECTOR_BASE + irq] = callback;
+	handlers[irq] = callback;
 }
 
 static IdtEntry idt_get_descriptor(void* isr, uint8_t flags)
