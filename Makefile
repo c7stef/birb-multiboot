@@ -10,13 +10,14 @@ CFLAGS = -ffreestanding -O0 -Wall -Wextra -pedantic -std=c11
 LDFLAGS = -T linker.ld -nostdlib -lgcc
 
 C_SRCS = \
-	kernel.c		\
+	main.c			\
 	birb.c			\
 	utils.c 		\
 	term.c			\
 	gdt.c			\
 	idt.c			\
-	pic.c
+	pic.c			\
+	keyboard.c
 
 AS_SRCS = \
 	boot.s
@@ -24,7 +25,8 @@ AS_SRCS = \
 NASM_SRCS = \
 	irq.asm			\
 	load_gdt.asm	\
-	load_idt.asm
+	load_idt.asm	\
+	int32.asm
 
 C_OBJS = $(C_SRCS:%.c=%.o)
 AS_OBJS = $(AS_SRCS:%.s=%.o)
@@ -61,7 +63,7 @@ birb.bin: $(C_OBJS) $(AS_OBJS) $(NASM_OBJS)
 	nasm -felf32 $< -o $@
 
 clean:
-	rm -rf *.o birb.{bin,iso}
+	rm -rf *.o birb.bin birb.iso
 
 $(DEPDIR): ; @mkdir -p $@
 
