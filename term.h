@@ -31,10 +31,6 @@ extern VgaColor vga_color_map[];
 
 typedef struct TermHandle
 {
-	size_t row;
-	size_t col;
-	VgaColor color_fg;
-	VgaColor color_bg;
 	uint16_t* buffer;
 } TermHandle;
 
@@ -43,16 +39,6 @@ uint16_t vga_entry(unsigned char uc, uint8_t color);
 
 void terminal_change_mode(void);
 void terminal_initialize(TermHandle* term);
-
-void terminal_setcolor(TermHandle* term, uint8_t color);
-void terminal_putentryat(TermHandle* term, uint16_t entry, size_t x, size_t y);
-void terminal_putchar(TermHandle* term, char c);
-void terminal_clear(TermHandle* term);
-void terminal_write(TermHandle* term, const char* data, size_t size);
-void terminal_writestring(TermHandle* term, const char* data);
-void terminal_draw_pixel(TermHandle* term, VgaColor color, size_t x, size_t y);
-void terminal_move_to(TermHandle* term, size_t x, size_t y);
-void terminal_set_fg_color(TermHandle* term, VgaColor fg);
-void terminal_set_bg_color(TermHandle* term, VgaColor bg);
+void terminal_put_entry(TermHandle* term, uint16_t entry, size_t x, size_t y);
 
 #endif // TERM_H
