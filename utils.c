@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "screen.h"
 
 void outb(uint16_t port, uint8_t val);
 uint8_t inb(uint16_t port);
@@ -36,13 +37,15 @@ noreturn void panic(char const* message)
     TermHandle term = { 0 };
     terminal_initialize(&term);
 
-	terminal_set_bg_color(&term, VgaColor_Red);
-    terminal_clear(&term);
+	Screen panic_screen = { 0 };
+	uint8_t text_color = vga_entry_color(VgaColor_White, VgaColor_Red);
+	char message_fatal[] = "FATAL: ";
 
-    terminal_move_to(&term, 1, 1);
-	terminal_set_fg_color(&term, VgaColor_White);
-    terminal_writestring(&term, "FATAL: ");
-    terminal_writestring(&term, message);
+	screen_clear(&panic_screen, VgaColor_Red);
+	screen_write_string(&panic_screen, message_fatal, 1, 1, text_color);
+	screen_write_string(&panic_screen, message, sizeof message_fatal, 1, text_color);
+
+	screen_display(&panic_screen, &term);
 
 	hang();
 }
