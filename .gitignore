@@ -1,4 +1,5 @@
 .vscode
+.deps
 isodir/
 *.o
 *.bin
