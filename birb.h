@@ -1,7 +1,7 @@
 #ifndef BIRB_H
 #define BIRB_H
 
-#include "term.h"
+#include "screen.h"
 #include "utils.h"
 
 typedef struct Birb
@@ -13,6 +13,6 @@ typedef struct Birb
 void birb_initialize(Birb* birb);
 void birb_jump(Birb* birb);
 void birb_update(Birb* birb);
-void birb_render(Birb* birb, TermHandle* term);
+void birb_render(Birb* birb, Screen* screen);
 
 #endif // BIRB_H

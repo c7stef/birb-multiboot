@@ -3,13 +3,13 @@
 static char const* const birb_sprite[] = {
     "     WW ",
     "     WWB",
-    "   DGGW ",
-    "  DGGGW ",
-    "DDWWWW  ",
+    "   WWWW ",
+    "  WWWWW ",
+    "WWWWWW  ",
     "  B B   "
 };
 
-static Vec2 jump_velocity = { .x = 0, .y = -12 };
+static Vec2 jump_velocity = { .x = 0, .y = -14 };
 
 #define VELOCITY_STEP 2
 #define POSITION_STEP 10
@@ -36,7 +36,7 @@ void birb_update(Birb* birb)
         birb->velocity.y = VELOCITY_STEP;
 }
 
-void birb_render(Birb* birb, TermHandle* term)
+void birb_render(Birb* birb, Screen* screen)
 {
     size_t sprite_height = sizeof birb_sprite / sizeof *birb_sprite;
     size_t sprite_width = strlen(*birb_sprite);
@@ -50,7 +50,7 @@ void birb_render(Birb* birb, TermHandle* term)
 
             VgaColor color = vga_color_map[(size_t)sprite_ch];
 
-            terminal_draw_pixel(term, color,
+            screen_draw_pixel(screen, color,
                 birb->position.x / POSITION_STEP + j,
                 birb->position.y / POSITION_STEP + i);
         }
