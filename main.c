@@ -7,15 +7,14 @@
 #include "birb.h"
 #include "term.h"
 #include "keyboard.h"
+#include "screen.h"
 
-void kmain(void) 
+void kmain(void)
 {
 	TermHandle term = { 0 };
 
 	terminal_change_mode();
 	terminal_initialize(&term);
-	terminal_set_bg_color(&term, VgaColor_Black);
-	terminal_clear(&term);
 
 	gdt_init();
 	idt_init();
@@ -28,6 +27,8 @@ void kmain(void)
 
 	birb.position = (Vec2) {40, 40};
 
+	Screen screen = { 0 };
+
 	while (1) {
 		Key key_pressed = keyboard_pop_key_pressed();
 
@@ -36,10 +37,11 @@ void kmain(void)
 
 		birb_update(&birb);
 
-		terminal_clear(&term);
-		birb_render(&birb, &term);
+		screen_clear(&screen, VgaColor_Black);
+		birb_render(&birb, &screen);
+		screen_display(&screen, &term);
 
-		sleep(5000);
+		sleep(6000);
 	}
 }
 
