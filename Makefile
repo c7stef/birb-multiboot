@@ -6,10 +6,10 @@ DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 CC = i686-elf-gcc
 AS = i686-elf-as
 
-CFLAGS = -ffreestanding -O0 -Wall -Wextra -pedantic -std=c11
+CFLAGS = -ffreestanding -O3 -Wall -Wextra -pedantic -std=c11
 LDFLAGS = -T linker.ld -nostdlib -lgcc
 
-C_SRCS = \
+C_SRCS = 			\
 	main.c			\
 	birb.c			\
 	utils.c 		\
@@ -17,12 +17,13 @@ C_SRCS = \
 	gdt.c			\
 	idt.c			\
 	pic.c			\
-	keyboard.c
+	keyboard.c		\
+	screen.c
 
-AS_SRCS = \
+AS_SRCS = 			\
 	boot.s
 
-NASM_SRCS = \
+NASM_SRCS = 		\
 	irq.asm			\
 	load_gdt.asm	\
 	load_idt.asm	\
@@ -50,7 +51,6 @@ birb.iso: birb.bin grub.cfg
 	grub-mkrescue -o birb.iso $(ISODIR)
 
 birb.bin: $(C_OBJS) $(AS_OBJS) $(NASM_OBJS)
-
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
 %.o : %.c $(DEPDIR)/%.d | $(DEPDIR)
@@ -65,9 +65,10 @@ birb.bin: $(C_OBJS) $(AS_OBJS) $(NASM_OBJS)
 clean:
 	rm -rf *.o birb.bin birb.iso
 
-$(DEPDIR): ; @mkdir -p $@
+$(DEPDIR):
+	@mkdir -p $@
 
-DEPFILES := $(SRCS:%.c=$(DEPDIR)/%.d)
+DEPFILES := $(C_SRCS:%.c=$(DEPDIR)/%.d)
 $(DEPFILES):
 
 include $(wildcard $(DEPFILES))
