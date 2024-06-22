@@ -24,3 +24,10 @@ Then open the image with your emulator of choice. QEMU example:
 ```bash
 qemu-system-i386 -cdrom birb.iso
 ```
+
+### Running on a physical machine
+
+To run Birb on a physical x86-based machine, you need the following:
+
+* a VGA-compatible graphics card
+* a PS/2 keyboard.
