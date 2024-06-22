@@ -27,7 +27,15 @@ qemu-system-i386 -cdrom birb.iso
 
 ### Running on a physical machine
 
-To run Birb on a physical x86-based machine, you need the following:
+You need a USB device for booting, and an x86-based machine with the following:
 
 * a VGA-compatible graphics card
-* a PS/2 keyboard.
+* a PS/2 keyboard
+
+Install `birb.iso` on the USB disk by running:
+
+```bash
+sudo dd bs=4M if=birb.iso of=/dev/sdX status=progress oflag=sync
+```
+
+where `/dev/sdX` is your USB device which you can find by running `lsblk`. **Be careful** not to enter the wrong device file, as `dd` does not ask for confirmation.
