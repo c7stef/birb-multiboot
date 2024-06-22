@@ -20,6 +20,16 @@ void screen_draw_pixel(Screen* screen, VgaColor color, size_t x, size_t y)
         screen->pixels[y][x] = vga_entry(' ', vga_entry_color(color, color));
 }
 
+void screen_draw_sprite_px(Screen* screen, char ch, size_t x, size_t y)
+{
+    if (ch == ' ')
+        return;
+    
+    VgaColor color = vga_color_map[(size_t)ch];
+
+    screen_draw_pixel(screen, color, x, y);
+}
+
 void screen_put_entry(Screen* screen, uint16_t entry, size_t x, size_t y)
 {
     if (x < VGA_WIDTH && y < VGA_HEIGHT)

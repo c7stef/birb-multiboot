@@ -10,6 +10,7 @@ typedef struct Screen {
 void screen_display(Screen* screen, TermHandle* term);
 void screen_clear(Screen* screen, VgaColor color);
 void screen_draw_pixel(Screen* screen, VgaColor color, size_t x, size_t y);
+void screen_draw_sprite_px(Screen* screen, char ch, size_t x, size_t y);
 void screen_put_entry(Screen* screen, uint16_t entry, size_t x, size_t y);
 void screen_write_string(Screen* screen, char const* string, size_t x, size_t y, uint8_t color_entry);
 
