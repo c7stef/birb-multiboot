@@ -6,7 +6,7 @@ DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 CC = i686-elf-gcc
 AS = i686-elf-as
 
-CFLAGS = -ffreestanding -O3 -Wall -Wextra -pedantic -std=c11
+CFLAGS = -ffreestanding -O3 -Wall -Wextra -pedantic -std=c2x
 LDFLAGS = -T linker.ld -nostdlib -lgcc
 
 C_SRCS = 			\
@@ -18,7 +18,9 @@ C_SRCS = 			\
 	idt.c			\
 	pic.c			\
 	keyboard.c		\
-	screen.c
+	screen.c		\
+	tunnel.c		\
+	ui.c
 
 AS_SRCS = 			\
 	boot.s
