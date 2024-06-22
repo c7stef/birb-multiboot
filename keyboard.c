@@ -7,7 +7,6 @@
 
 // One-element queue.
 static Key current_key_pressed = Key_None;
-static Key current_key_released = Key_None;
 
 static void keyboard_irq_handler(void)
 {
@@ -15,21 +14,14 @@ static void keyboard_irq_handler(void)
 
     if (key == 0x11)
         current_key_pressed = Key_W;
-    if (key == 0x91)
-        current_key_released = Key_W;
+    if (key == 0x1C)
+        current_key_pressed = Key_Return;
 }
 
 Key keyboard_pop_key_pressed(void)
 {
     Key key = current_key_pressed;
     current_key_pressed = Key_None;
-    return key;
-}
-
-Key keyboard_pop_key_released(void)
-{
-    Key key = current_key_released;
-    current_key_released = Key_None;
     return key;
 }
 
