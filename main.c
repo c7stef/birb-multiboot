@@ -10,8 +10,7 @@
 #include "screen.h"
 #include "tunnel.h"
 #include "ui.h"
-
-#define TICKS_SPAWN_TUNNEL 50
+#include "timer.h"
 
 void kmain(void)
 {
@@ -25,10 +24,10 @@ void kmain(void)
 	pic_init();
 	keyboard_init();
 	enable_interrupts();
+	timer_init();
 
 	Birb birb = { 0 };
 	birb_initialize(&birb);
-	birb.position = (Vec2) {40, 40};
 
 	TunnelPool tunnels = { 0 };
 	tunnel_pool_initialize(&tunnels);
@@ -37,7 +36,6 @@ void kmain(void)
 
 	size_t score = 0;
 	size_t dead = false;
-	size_t tunnel_spawn_counter = 0;
 
 	while (1) {
 		Key key_pressed = keyboard_pop_key_pressed();
@@ -48,8 +46,6 @@ void kmain(void)
 				score = 0;
 
 				birb_initialize(&birb);
-				birb.position = (Vec2) {40, 40};
-
 				tunnel_pool_initialize(&tunnels);
 			}
 		} else {
@@ -63,13 +59,6 @@ void kmain(void)
 				dead = true;
 				continue;
 			}
-
-			if (tunnel_spawn_counter == 0) {
-				tunnel_pool_spawn(&tunnels);
-				tunnel_spawn_counter = TICKS_SPAWN_TUNNEL;
-			}
-
-			tunnel_spawn_counter--;
 
 			birb_update(&birb);
 			tunnel_pool_update(&tunnels);
@@ -85,7 +74,7 @@ void kmain(void)
 		
 		screen_display(&screen, &term);
 
-		sleep(6000);
+		timer_sleep_ticks(1);
 	}
 }
 

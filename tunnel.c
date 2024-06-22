@@ -1,5 +1,6 @@
 #include "tunnel.h"
 
+#define TUNNEL_DISTANCE 40
 #define TUNNEL_GAP      16
 #define TUNNEL_PADDING  6
 #define TUNNEL_RANGE    (VGA_HEIGHT - 2 * TUNNEL_PADDING - TUNNEL_GAP)
@@ -7,7 +8,7 @@
 #define TUNNEL_HEIGHT   5
 #define TUNNEL_WIDTH    10
 
-#define VELOCITY_STEP   100   
+#define VELOCITY_STEP   200
 
 static char const tunnel_head[TUNNEL_HEIGHT][TUNNEL_WIDTH] = {
     "GGGGGGGGGG",
@@ -33,7 +34,14 @@ static size_t tunnel_pool_next_idx(size_t idx)
     return idx;
 }
 
-void tunnel_pool_spawn(TunnelPool* pool)
+static size_t tunnel_pool_prev_idx(size_t idx)
+{
+    if (idx == 0)
+        return MAX_TUNNELS - 1;
+    return idx - 1;
+}
+
+static void tunnel_pool_spawn(TunnelPool* pool)
 {
     size_t idx1 = pool->end;
     pool->end = tunnel_pool_next_idx(pool->end);
@@ -101,6 +109,15 @@ void tunnel_pool_update(TunnelPool* pool)
         int new_x = pool->tunnels[i].position.x += pool->velocity.x / VELOCITY_STEP;
         if (decimal_to_pixel(new_x) <= -TUNNEL_WIDTH)
             tunnel_pool_pop(pool);
+    }
+
+    if (pool->begin == pool->end)
+        tunnel_pool_spawn(pool);
+    else {
+        size_t last_idx = tunnel_pool_prev_idx(pool->end);
+        int x = decimal_to_pixel(pool->tunnels[last_idx].position.x);
+        if (VGA_WIDTH - x > TUNNEL_DISTANCE)
+            tunnel_pool_spawn(pool);
     }
 }
 

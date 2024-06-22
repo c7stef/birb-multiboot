@@ -24,7 +24,6 @@ typedef struct TunnelPool {
 
 void tunnel_pool_initialize(TunnelPool* pool);
 bool tunnel_check_collision_at(TunnelPool* pool, Vec2 point);
-void tunnel_pool_spawn(TunnelPool* pool);
 void tunnel_pool_update(TunnelPool* pool);
 void tunnel_pool_render(TunnelPool* pool, Screen* screen);
 bool tunnel_pool_birb_passed(TunnelPool* pool, Birb* birb);
