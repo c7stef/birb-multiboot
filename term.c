@@ -8,8 +8,7 @@ VgaColor vga_color_map[] = {
 	[' '] = VgaColor_Black,
 	['B'] = VgaColor_Brown,
 	['W'] = VgaColor_White,
-	['D'] = VgaColor_DarkGrey,
-	['G'] = VgaColor_LightGrey,
+	['G'] = VgaColor_Green,
 };
 
 void terminal_change_mode(void)
