@@ -29,7 +29,8 @@ static Vec2 jump_velocity = { .x = 0, .y = -16 };
 
 void birb_initialize(Birb* birb)
 {
-    birb->position = birb->velocity = (Vec2) { 0, 0 };
+    birb->position = vec2_pixel_to_decimal((Vec2) { 5, VGA_HEIGHT/2 });
+    birb->velocity = jump_velocity;
 }
 
 void birb_jump(Birb* birb)
