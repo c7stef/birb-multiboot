@@ -95,6 +95,11 @@ void idt_init(void)
 	load_idt((uint32_t)&idt, sizeof idt);
 }
 
+void disable_interrupts(void)
+{
+	__asm__ volatile ("cli");
+}
+
 void enable_interrupts(void)
 {
 	__asm__ volatile ("sti");
