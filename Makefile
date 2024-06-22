@@ -20,7 +20,8 @@ C_SRCS = 			\
 	keyboard.c		\
 	screen.c		\
 	tunnel.c		\
-	ui.c
+	ui.c			\
+	timer.c
 
 AS_SRCS = 			\
 	boot.s
